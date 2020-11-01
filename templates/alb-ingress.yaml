@@ -1,0 +1,55 @@
+{{- if .Values.awsLbController.enabled -}}
+{{- $name := include "cxcloud-service.name" . -}}
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ $name }}
+  labels:
+    helm.sh/chart: {{ include "cxcloud-service.chart" . }}
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/group.name: {{ .Values.awsLbController.groupName }}
+  {{- if gt .Values.awsLbController.groupOrder 0.0 }}
+    alb.ingress.kubernetes.io/group.order: {{ .Values.awsLbController.groupOrder | quote }}
+  {{- end }}
+    alb.ingress.kubernetes.io/scheme: {{ .Values.awsLbController.scheme }}
+    alb.ingress.kubernetes.io/target-type: {{ .Values.awsLbController.targetType }}
+  {{- if .Values.awsLbController.redirectToHTTPSPort }}
+    alb.ingress.kubernetes.io/actions.redirect-to-https: '{"Type": "redirect", "RedirectConfig":
+      { "Protocol": "HTTPS", "Port": "{{ .Values.awsLbController.listenPorts.https }}", "StatusCode": "HTTP_301"}}'
+  {{- end }}
+  {{- if .Values.awsLbController.listenPorts.https }}
+    alb.ingress.kubernetes.io/certificate-arn: {{ .Values.awsLbController.certificateArn }}
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":{{ .Values.awsLbController.listenPorts.http }}}, {"HTTPS":{{ .Values.awsLbController.listenPorts.https }}}]'
+  {{- else }}
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":{{ .Values.awsLbController.listenPorts.http }}}]'
+  {{- end }}
+  {{- with .Values.awsLbController.healthCheck }}
+    alb.ingress.kubernetes.io/healthcheck-path: {{ .path }}
+    alb.ingress.kubernetes.io/healthcheck-port: {{ .port | quote }}
+    alb.ingress.kubernetes.io/success-codes: {{ .successCodes | quote }}
+    alb.ingress.kubernetes.io/healthcheck-interval-seconds: {{ .interval | quote }}
+    alb.ingress.kubernetes.io/healthcheck-timeout-seconds: {{ .timeout | quote }}
+    alb.ingress.kubernetes.io/healthy-threshold-count: {{ .healthyThreshold | quote }}
+    alb.ingress.kubernetes.io/unhealthy-threshold-count: {{ .unhealthyThreshold | quote }}
+  {{- end }}
+  {{- range $key, $value := .Values.awsLbController.annotations }}
+    {{ $key }}: {{ $value | quote }}
+  {{- end }}
+
+spec:
+  rules:
+    - host: {{ .Values.awsLbController.host }}
+      http:
+        paths:
+      {{- if .Values.awsLbController.redirectToHTTPSPort }}
+        - path: /*
+          backend:
+            serviceName: redirect-to-https
+            servicePort: use-annotation
+      {{- end }}
+        - path: {{ .Values.awsLbController.path }}
+          backend:
+            serviceName: {{ $name }}
+            servicePort: {{ .Values.service.ports.http.port }}
+{{- end }}

@@ -1,0 +1,92 @@
+# Default values for cxcloud-service.
+
+name: cxcloud
+
+replicaCount: 2
+
+image:
+  repository: 012345678901.dkr.ecr.eu-west-1.amazonaws.com/cxcloud-service
+  tag: 0.1.0
+  pullPolicy: IfNotPresent
+
+restartPolicy: Always
+
+service:
+  type: ClusterIP
+  ports:
+    http:
+      port: 80
+      targetPort: 8080
+      protocol: TCP
+
+# AWS LoadBalancer Controller https://kubernetes-sigs.github.io/aws-load-balancer-controller/
+awsLbController:
+  enabled: true
+  groupName: cxcloud
+  groupOrder: 0
+  host: www.cxcloud.com
+  path: /*
+  listenPorts:
+    http: "80"
+    https: ""
+  redirectToHTTPSPort: false
+  targetType: ip
+  scheme: internal
+  certificateArn: ""
+  healthCheck:
+    path: /
+    port: 80
+    successCodes: 200
+    interval: 10
+    timeout: 5
+    healthyThreshold: 2
+    unhealthyThreshold: 2
+  # Additional annotations, see https://kubernetes-sigs.github.io/aws-load-balancer-controller/guide/ingress/annotations/
+  annotations: {}
+
+# Kubernetes health check probes for pods
+healthChecks:
+  readinessProbe:
+    httpGet:
+      path: /
+      port: 8080
+    initialDelaySeconds: 30
+    periodSeconds: 5
+    failureThreshold: 2
+  livenessProbe:
+    httpGet:
+      path: /
+      port: 8080
+    initialDelaySeconds: 60
+    periodSeconds: 10
+    failureThreshold: 6
+
+# Default rolling update strategy
+rollingUpdate:
+  maxSurge: 25%
+  maxUnavailable: 25%
+
+# Environment variables as maps
+# Example with DB_USER and DB_PASSWORD
+# env:
+#   DB_USER: cxcloud-db-user
+#   DB_SECRET:
+#     valueFrom:
+#       secretKeyRef:
+#         key: secret
+#         name: cxcloud-db-secret
+env: {}
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 600Mi
+  requests:
+    cpu: 100m
+    memory: 200Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
