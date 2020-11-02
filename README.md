@@ -42,8 +42,8 @@ The following table list the configurable parameters of the chart and their defa
 | --- | --- | --- |
 | name | Name for the microservice | cxcloud |
 | replicaCount | Amount of pods | 2 |
-| image.repository | Repository for docker image  | fluent/fluentd-kubernetes-daemonset |
-| image.tag | Docker image tag | v0.12-debian-kinesis |
+| image.repository | Repository for docker image  | 012345678901.dkr.ecr.eu-west-1.amazonaws.com/cxcloud-service |
+| image.tag | Docker image tag | 0.1.0 |
 | image.pullPolicy | Image pull policy | IfNotPresent |
 | restartPolicy | The restartPolicy applies to all containers in the Pod | Always |
 | service.type | Service Type | ClusterIP |

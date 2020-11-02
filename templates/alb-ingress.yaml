@@ -19,7 +19,9 @@ metadata:
       { "Protocol": "HTTPS", "Port": "{{ .Values.awsLbController.listenPorts.https }}", "StatusCode": "HTTP_301"}}'
   {{- end }}
   {{- if .Values.awsLbController.listenPorts.https }}
+    {{- if .Values.awsLbController.certificateArn }}
     alb.ingress.kubernetes.io/certificate-arn: {{ .Values.awsLbController.certificateArn }}
+    {{- end }}
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":{{ .Values.awsLbController.listenPorts.http }}}, {"HTTPS":{{ .Values.awsLbController.listenPorts.https }}}]'
   {{- else }}
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":{{ .Values.awsLbController.listenPorts.http }}}]'
