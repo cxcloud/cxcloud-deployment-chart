@@ -18,11 +18,11 @@ Update repositories:
 helm repo update
 ```
 
-To install the chart with version `0.1.0` and release name `my-release` into the namespace `kube-system`:
+To install the chart with version `0.1.1` and release name `my-release` into the namespace `kube-system`:
 
 ```bash
-helm upgrade -i my-release cxcloud/helm-cxcloud-microservice \
-  --version 0.1.0 \
+helm upgrade -i my-release cxcloud/cxcloud-deployment-chart \
+  --version 0.1.1 \
   --namespace kube-system
 ```
 
