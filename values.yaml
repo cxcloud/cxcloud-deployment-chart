@@ -45,21 +45,23 @@ awsLbController:
   annotations: {}
 
 # Kubernetes health check probes for pods
-healthChecks:
-  readinessProbe:
-    httpGet:
-      path: /
-      port: 8080
-    initialDelaySeconds: 30
-    periodSeconds: 5
-    failureThreshold: 2
-  livenessProbe:
-    httpGet:
-      path: /
-      port: 8080
-    initialDelaySeconds: 60
-    periodSeconds: 10
-    failureThreshold: 6
+# Use following schema to add readiness / liveliness probes in values.yaml file for the project
+# List of suitable probes can be found in https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
+healthChecks: {}
+#  readinessProbe:
+#    httpGet:
+#      path: /
+#      port: 8080
+#    initialDelaySeconds: 30
+#    periodSeconds: 5
+#    failureThreshold: 2
+#  livenessProbe:
+#    httpGet:
+#      path: /
+#      port: 8080
+#    initialDelaySeconds: 60
+#    periodSeconds: 10
+#    failureThreshold: 6
 
 # Default rolling update strategy
 rollingUpdate:
