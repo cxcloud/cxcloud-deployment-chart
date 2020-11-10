@@ -24,7 +24,8 @@ awsLbController:
   enabled: true
   groupName: cxcloud
   groupOrder: 0
-  host: www.cxcloud.com
+  # host of the ingress, defaults to empty value where all the hosts are matched by Ingress
+  host: ""
   path: /*
   listenPorts:
     http: "80"
