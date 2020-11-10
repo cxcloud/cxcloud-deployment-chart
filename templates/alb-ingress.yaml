@@ -41,8 +41,7 @@ metadata:
 
 spec:
   rules:
-    - host: {{ .Values.awsLbController.host }}
-      http:
+    - http:
         paths:
       {{- if .Values.awsLbController.redirectToHTTPSPort }}
         - path: /*
@@ -54,4 +53,7 @@ spec:
           backend:
             serviceName: {{ $name }}
             servicePort: {{ .Values.service.ports.http.port }}
+    {{- if .Values.awsLbController.host }}
+      host: {{ .Values.awsLbController.host | quote }}
+    {{- end }}
 {{- end }}

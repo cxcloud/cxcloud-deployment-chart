@@ -18,12 +18,12 @@ Update repositories:
 helm repo update
 ```
 
-To install the chart with version `0.1.1` and release name `my-release` into the namespace `kube-system`:
+To install the chart with version `0.1.2` and release name `my-release` into the namespace `production`:
 
 ```bash
 helm upgrade -i my-release cxcloud/cxcloud-deployment-chart \
-  --version 0.1.1 \
-  --namespace kube-system
+  --version 0.1.2 \
+  --namespace production
 ```
 
 ### Uninstalling the Chart
@@ -55,7 +55,7 @@ The following table list the configurable parameters of the chart and their defa
 | awsLbController.enabled | Enable AWS LoadBalancer Controller | true |
 | awsLbController.groupName | specifies the group name that this Ingress belongs to | cxcloud |
 | awsLbController.groupOrder | specifies the order across all Ingresses within IngressGroup | 0 |
-| awsLbController.host | Host name for routing rules | www.cxcloud.com |
+| awsLbController.host | Host name for routing rules | "" |
 | awsLbController.path | Application path for routing rules | /* |
 | awsLbController.listenPorts.http | Specifies the http port that ALB used to listen on | "80" |
 | awsLbController.listenPorts.https | Specifies the https port that ALB used to listen on | "" |
@@ -71,7 +71,7 @@ The following table list the configurable parameters of the chart and their defa
 | awsLbController.healthCheck.healthyThreshold | specifies the consecutive health checks successes required before considering an unhealthy target healthy | 2 |
 | awsLbController.healthCheck.unhealthyThreshold | specifies the consecutive health check failures required before considering a target unhealthy | 2 |
 | awsLbController.annotations | Additional AWS Load Balancer Controller [annotations](https://kubernetes-sigs.github.io/aws-load-balancer-controller/guide/ingress/annotations/) | {} |
-| healthChecks | Kubernetes health check probes for pods | rediness and liveness probes |
+| healthChecks | Kubernetes health check probes for pods | {} |
 | rollingUpdate | Default rolling update strategy | maxSurge: 25%, maxUnavailable: 25% |
 | env | Pod environment variables as maps | {} |
 | resources | CPU and memory resources object for pods | limits and requests objects |
