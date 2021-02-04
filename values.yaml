@@ -88,6 +88,11 @@ resources:
     cpu: 100m
     memory: 200Mi
 
+serviceAccount:
+  create: false
+  roleArn:
+  annotations: {}
+
 nodeSelector: {}
 
 tolerations: []

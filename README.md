@@ -18,11 +18,11 @@ Update repositories:
 helm repo update
 ```
 
-To install the chart with version `0.1.2` and release name `my-release` into the namespace `production`:
+To install the chart with version `0.1.3` and release name `my-release` into the namespace `production`:
 
 ```bash
 helm upgrade -i my-release cxcloud/cxcloud-deployment-chart \
-  --version 0.1.2 \
+  --version 0.1.3 \
   --namespace production
 ```
 
@@ -75,6 +75,9 @@ The following table list the configurable parameters of the chart and their defa
 | rollingUpdate | Default rolling update strategy | maxSurge: 25%, maxUnavailable: 25% |
 | env | Pod environment variables as maps | {} |
 | resources | CPU and memory resources object for pods | limits and requests objects |
+| serviceAccount.create | Create Service Account | false |
+| serviceAccount.roleArn | Associate an IAM role to a service account | "" |
+| serviceAccount.annotations | Service Account annotations | {} |
 | nodeSelector | Kubernetes node selection constraint | {} |
 | tolerations | Tolerations are applied to pods, and allow (but do not require) the pods to schedule onto nodes with matching taints | [] |
 | affinity | constrain which nodes your pod is eligible to be scheduled on | {} |
