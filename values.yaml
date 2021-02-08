@@ -93,6 +93,11 @@ serviceAccount:
   roleArn:
   annotations: {}
 
+securityContext:
+  runAsUser:
+  runAsGroup:
+  fsGroup:
+
 nodeSelector: {}
 
 tolerations: []

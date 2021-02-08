@@ -18,12 +18,10 @@ Update repositories:
 helm repo update
 ```
 
-To install the chart with version `0.1.3` and release name `my-release` into the namespace `production`:
+To install the chart with latest version and release name `my-release` into the namespace `production`:
 
 ```bash
-helm upgrade -i my-release cxcloud/cxcloud-deployment-chart \
-  --version 0.1.3 \
-  --namespace production
+helm upgrade -i my-release cxcloud/cxcloud-deployment-chart --namespace production
 ```
 
 ### Uninstalling the Chart
@@ -78,6 +76,9 @@ The following table list the configurable parameters of the chart and their defa
 | serviceAccount.create | Create Service Account | false |
 | serviceAccount.roleArn | Associate an IAM role to a service account | "" |
 | serviceAccount.annotations | Service Account annotations | {} |
+| securityContext.runAsUser | Specifies that for any Containers in the Pod, all processes run with the user ID | "" |
+| securityContext.runAsGroup | Specifies the primary group ID for all processes within any containers of the Pod. | "" |
+| securityContext.fsGroup | Kubernetes recursively changes ownership and permissions for the contents of each volume to match the fsGroup | "" |
 | nodeSelector | Kubernetes node selection constraint | {} |
 | tolerations | Tolerations are applied to pods, and allow (but do not require) the pods to schedule onto nodes with matching taints | [] |
 | affinity | constrain which nodes your pod is eligible to be scheduled on | {} |

@@ -51,6 +51,18 @@ spec:
             {{- end }}
           {{- end }}
         {{- end }}
+    {{- if or .Values.securityContext.runAsUser .Values.securityContext.runAsGroup .Values.securityContext.fsGroup }}
+      securityContext:
+      {{- if .Values.securityContext.runAsUser }}
+        runAsUser: {{ .Values.securityContext.runAsUser }}
+      {{- end }}
+      {{- if .Values.securityContext.runAsGroup }}
+        runAsGroup: {{ .Values.securityContext.runAsGroup }}
+      {{- end }}
+      {{- if .Values.securityContext.fsGroup }}
+        fsGroup: {{ .Values.securityContext.fsGroup }}
+      {{- end }}
+    {{- end }}
       restartPolicy: {{ .Values.restartPolicy }}
     {{- with .Values.nodeSelector }}
       nodeSelector:
