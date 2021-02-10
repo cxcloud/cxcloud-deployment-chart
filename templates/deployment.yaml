@@ -63,6 +63,9 @@ spec:
         fsGroup: {{ .Values.securityContext.fsGroup }}
       {{- end }}
     {{- end }}
+    {{- if .Values.serviceAccount.create }}
+      serviceAccountName: {{ $name }}
+    {{- end }}
       restartPolicy: {{ .Values.restartPolicy }}
     {{- with .Values.nodeSelector }}
       nodeSelector:
