@@ -35,6 +35,9 @@ metadata:
     alb.ingress.kubernetes.io/healthy-threshold-count: {{ .healthyThreshold | quote }}
     alb.ingress.kubernetes.io/unhealthy-threshold-count: {{ .unhealthyThreshold | quote }}
   {{- end }}
+  {{- if .Values.awsLbController.wafv2AclArn }}
+    alb.ingress.kubernetes.io/wafv2-acl-arn: {{ .Values.awsLbController.wafv2AclArn }}
+  {{- end }}
   {{- range $key, $value := .Values.awsLbController.annotations }}
     {{ $key }}: {{ $value | quote }}
   {{- end }}

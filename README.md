@@ -61,6 +61,7 @@ The following table list the configurable parameters of the chart and their defa
 | awsLbController.targetType | Specifies how to route traffic to pods. You can choose between instance and ip | ip |
 | awsLbController.scheme | Specifies whether your LoadBalancer will be internet facing | internal |
 | awsLbController.certificateArn | specifies the ARN of one or more certificate managed by AWS Certificate Manager | "" |
+| awsLbController.wafv2AclArn | specifies ARN for the Amazon WAFv2 web ACL | "" |
 | awsLbController.healthCheck.path | specifies the HTTP path when performing health check on targets | / |
 | awsLbController.healthCheck.port | specifies the port used when performing health check on targets | 80 |
 | awsLbController.healthCheck.successCodes | specifies the HTTP status code that should be expected when doing health checks against the specified health check path | 200 |
