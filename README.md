@@ -23,6 +23,8 @@ To install the chart with latest version and release name `my-release` into the 
 ```bash
 helm upgrade -i my-release cxcloud/cxcloud-deployment-chart --namespace production
 ```
+For specific chart version, add `--version x.x.x` into helm command. Some release notes can be found in
+https://github.com/cxcloud/helm-charts
 
 ### Uninstalling the Chart
 
