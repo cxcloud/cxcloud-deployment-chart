@@ -48,14 +48,20 @@ spec:
         paths:
       {{- if .Values.awsLbController.redirectToHTTPSPort }}
         - path: /*
+          pathType: Prefix
           backend:
-            serviceName: redirect-to-https
-            servicePort: use-annotation
+            service:
+              name: redirect-to-https
+              port:
+                name: use-annotation
       {{- end }}
         - path: {{ .Values.awsLbController.path }}
+          pathType: Prefix
           backend:
-            serviceName: {{ $name }}
-            servicePort: {{ .Values.service.ports.http.port }}
+            service:
+              name: {{ $name }}
+              port:
+                number: {{ .Values.service.ports.http.port }}
     {{- if .Values.awsLbController.host }}
       host: {{ .Values.awsLbController.host | quote }}
     {{- end }}
