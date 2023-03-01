@@ -9,7 +9,7 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: alb
     alb.ingress.kubernetes.io/group.name: {{ .Values.awsLbController.groupName }}
-  {{- if gt .Values.awsLbController.groupOrder 0.0 }}
+  {{- if .Values.awsLbController.groupOrder }}
     alb.ingress.kubernetes.io/group.order: {{ .Values.awsLbController.groupOrder | quote }}
   {{- end }}
     alb.ingress.kubernetes.io/scheme: {{ .Values.awsLbController.scheme }}
