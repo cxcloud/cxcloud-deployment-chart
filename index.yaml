@@ -1,0 +1,13 @@
+apiVersion: v1
+entries:
+  cxcloud-deployment-chart:
+  - apiVersion: v1
+    appVersion: 0.2.2
+    created: "2023-03-01T11:13:52.248157+02:00"
+    description: A Helm chart for deploying microservices
+    digest: 061af283e690bdfe0d676ddbb027440fb2a92c983ea1642be8e6e456705ce8bd
+    name: cxcloud-deployment-chart
+    urls:
+    - https://github.com/cxcloud/helm-charts/raw/master/cxcloud-deployment-chart-0.2.2.tgz
+    version: 0.2.2
+generated: "2023-03-01T11:13:52.246416+02:00"
