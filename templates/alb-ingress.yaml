@@ -1,6 +1,6 @@
 {{- if .Values.awsLbController.enabled -}}
 {{- $name := include "cxcloud-service.name" . -}}
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ $name }}
@@ -9,7 +9,7 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: alb
     alb.ingress.kubernetes.io/group.name: {{ .Values.awsLbController.groupName }}
-  {{- if gt .Values.awsLbController.groupOrder 0.0 }}
+  {{- if .Values.awsLbController.groupOrder }}
     alb.ingress.kubernetes.io/group.order: {{ .Values.awsLbController.groupOrder | quote }}
   {{- end }}
     alb.ingress.kubernetes.io/scheme: {{ .Values.awsLbController.scheme }}
@@ -47,15 +47,21 @@ spec:
     - http:
         paths:
       {{- if .Values.awsLbController.redirectToHTTPSPort }}
-        - path: /*
+        - path: /
+          pathType: Prefix
           backend:
-            serviceName: redirect-to-https
-            servicePort: use-annotation
+            service:
+              name: redirect-to-https
+              port:
+                name: use-annotation
       {{- end }}
         - path: {{ .Values.awsLbController.path }}
+          pathType: Prefix
           backend:
-            serviceName: {{ $name }}
-            servicePort: {{ .Values.service.ports.http.port }}
+            service:
+              name: {{ $name }}
+              port:
+                number: {{ .Values.service.ports.http.port }}
     {{- if .Values.awsLbController.host }}
       host: {{ .Values.awsLbController.host | quote }}
     {{- end }}
